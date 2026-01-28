@@ -20,3 +20,4 @@ torchinfo
 torchvision
 mlflow
 opencv-python
+accelerate

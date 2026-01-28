@@ -14,6 +14,7 @@ from sklearn.model_selection import KFold
 from tqdm import tqdm
 import mlflow
 import mlflow.pytorch
+import matplotlib.pyplot as plt
 
 # Add project root to path to import config
 sys.path.append(str(Path(__file__).resolve().parent.parent))
@@ -48,9 +49,40 @@ class EarlyStopping:
             self.counter += 1
             if self.counter >= self.patience:
                 self.early_stop = True
-        else:
             self.best_loss = val_loss
             self.counter = 0
+
+def plot_history(metadata):
+    if not metadata or "fold_results" not in metadata:
+        return
+        
+    folds = metadata["fold_results"]
+    plt.figure(figsize=(15, 6))
+    
+    # Plot Loss
+    plt.subplot(1, 2, 1)
+    for f in folds:
+        plt.plot(f['history']['train_loss'], alpha=0.3, label=f"Fold {f['fold']} Train")
+        plt.plot(f['history']['val_loss'], label=f"Fold {f['fold']} Val")
+    plt.title("Loss per Fold")
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+    plt.legend()
+    
+    # Plot Accuracy
+    plt.subplot(1, 2, 2)
+    for f in folds:
+        plt.plot(f['history']['train_acc'], alpha=0.3, label=f"Fold {f['fold']} Train")
+        plt.plot(f['history']['val_acc'], label=f"Fold {f['fold']} Val")
+    plt.title("Accuracy per Fold")
+    plt.xlabel("Epoch")
+    plt.ylabel("Accuracy")
+    plt.legend()
+    
+    os.makedirs("docs/visualizations", exist_ok=True)
+    save_path = "docs/visualizations/v2_training_history.png"
+    plt.savefig(save_path)
+    print(f"📊 Training history saved to {save_path}")
 
 def train_kfold(args):
     print(f"Using device: {DEVICE}")
@@ -241,6 +273,9 @@ def train_kfold(args):
     # Save Class List separately for simpler loading
     with open("models/v2_classes.txt", "w") as f:
         f.write("\n".join(classes))
+
+    # Plot History
+    plot_history(metadata)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

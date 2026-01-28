@@ -3,6 +3,7 @@ from pathlib import Path
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 from ..services.dataset_service import dataset_cache
+from ..services.captcha_v2_service import captcha_v2_service
 
 router = APIRouter(prefix="/api/v2")
 
