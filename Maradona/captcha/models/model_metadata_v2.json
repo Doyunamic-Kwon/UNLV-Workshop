@@ -1,0 +1,64 @@
+{
+    "classes": [
+        "Bicycle",
+        "Bridge",
+        "Bus",
+        "Car",
+        "Chimney",
+        "Crosswalk",
+        "Hydrant",
+        "Motorcycle",
+        "Other",
+        "Palm",
+        "Stair",
+        "Traffic Light"
+    ],
+    "num_classes": 12,
+    "config": {
+        "epochs": 1,
+        "batch_size": 8,
+        "learning_rate": 0.001,
+        "folds": 2
+    },
+    "dataset_path": "/Users/parkyoungdu/Downloads/samples_v2/images",
+    "fold_results": [
+        {
+            "fold": 1,
+            "best_val_acc": 0.7232736572890025,
+            "epochs_run": 1,
+            "history": {
+                "train_loss": [
+                    1.1854583432505705
+                ],
+                "val_loss": [
+                    0.9034329378150845
+                ],
+                "train_acc": [
+                    0.6163682864450127
+                ],
+                "val_acc": [
+                    0.7232736572890025
+                ]
+            }
+        },
+        {
+            "fold": 2,
+            "best_val_acc": 0.7621483375959079,
+            "epochs_run": 1,
+            "history": {
+                "train_loss": [
+                    1.1892639724596483
+                ],
+                "val_loss": [
+                    0.7562479938676173
+                ],
+                "train_acc": [
+                    0.6155157715260017
+                ],
+                "val_acc": [
+                    0.7621483375959079
+                ]
+            }
+        }
+    ]
+}
